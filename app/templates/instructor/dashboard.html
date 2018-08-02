@@ -1,0 +1,277 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+
+<!--Breadcrumb start-->
+<div class="ed_pagetitle">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-4 col-sm-6">
+				<div class="page_title">
+					<h2>Educo Instructor</h2>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-sm-6">
+				<ul class="breadcrumb">
+					<li><a href="index.html">home</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li><a href="instructor.html">Educo Instructor</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Breadcrumb end-->
+<!--instructor single start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="/static/images/profile/{{ data['instructor']['photo'] }}" alt="Profile Image" class="img-responsive" />
+					</div>
+					<h3>{{ session['instructor']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li class="active"><a href="#a" data-toggle="tab">profile</a></li>
+						  <li><a href="#b" data-toggle="tab">courses <span>{{data['courses']|length}}</span></a></li>
+						  <li><a href="#c" data-toggle="tab">activity</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					<div class="tab-pane active" id="a">
+						<div class="ed_dashboard_inner_tab">
+							<div role="tabpanel">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#view" aria-controls="view" role="tab" data-toggle="tab">instructor Detail</a></li>
+								</ul>
+					
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="view">
+									<div class="ed_inner_dashboard_info">
+										<h2> {{ session['instructor']['name'] }} (instructor)</h2>
+										<table id="profile_view_settings">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Location</th>
+													<th>Intro</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{ session['instructor']['name'] }}</td>
+													<td>{{ data['instructor']['location'] }}</td>
+													<td>{{ data['instructor']['about'] }}.</td>
+												</tr>												
+											</tbody>
+										</table>
+									</div>
+									</div>
+								</div>
+					
+							</div><!--tab End-->
+						</div>
+					</div>
+					<div class="tab-pane" id="b">
+						<div class="ed_dashboard_inner_tab">
+							<div role="tabpanel">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#my" aria-controls="my" role="tab" data-toggle="tab">courses</a></li>
+									<li role="presentation"><a href="#instructing" aria-controls="instructing" role="tab" data-toggle="tab">upcoming courses</a></li>
+								</ul>
+					
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="my">
+										<div class="ed_inner_dashboard_info">
+											<h2>all courses by {{ session['instructor']['name'] }}</h2>
+											<div class="row">
+												<div class="ed_mostrecomeded_course_slider">
+											{% if data['courses']|length == 0: %}
+												<p> You have no courses yet </p>
+											{% else: %}
+												{% for course in data['courses']: %}
+													<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ed_bottompadder20">
+														<div class="ed_item_img">
+															<img src="http://placehold.it/248X248" alt="item1" class="img-responsive">
+														</div>
+														<div class="ed_item_description ed_most_recomended_data">
+																<h4><a>{{course.title}} </a>
+																<span>{{ "N{:,.2f}".format(course.price) }}</span></h4>
+																<div class="row">
+																	<div class="ed_rating">
+																		<div class="col-lg-6 col-md-7 col-sm-6 col-xs-6">
+																			<div class="row">
+																				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+																					<div class="ed_stardiv">
+																						<div class="star-rating"><span style="width:80%;"></span></div>
+																					</div>
+																				</div>
+																				<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+																					<div class="row">
+																						<p>(5 review)</p>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-lg-6 col-md-5 col-sm-6 col-xs-6">
+																			<div class="ed_views">
+																			<i class="fa fa-users"></i>
+																			<span>{{course['subscribed']}} student(s)</span>
+																			</div>
+																		</div>
+																	</div>
+
+																	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-weight: bold">
+																		{% if course['questions'] > 0: %}
+																		<div class="ed_views">
+																			
+																			<span class="pull-left">{{course['questions']}}Question(s)</span>
+																			<a class="btn btn-primary pull-right" href="course_questions/{{course.title}}" target="new">
+																				View
+																			</a>
+																		</div>
+																		{% else: %}
+																		<p> There are no Questions for this course </p>
+																		{% endif %}
+																	</div>
+
+																</div>
+																<p>{{ course.description }}.</p>
+														</div>
+													</div>
+												{% endfor %}
+											{% endif %}
+												</div>
+											}
+											</div>
+										</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="instructing">
+										<div class="ed_inner_dashboard_info">
+											<h2>upcoming courses by {{ session['instructor']['name'] }}</h2>
+										</div>
+									</div>
+								</div>
+					
+							</div><!--tab End-->
+						</div>
+					</div>
+					<div class="tab-pane" id="c">
+						<div class="ed_dashboard_inner_tab">
+							<div role="tabpanel">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">personal</a></li>
+									<li role="presentation"><a href="#mentions" aria-controls="mentions" role="tab" data-toggle="tab">mentions</a></li>
+									<li role="presentation"><a href="#favourites" aria-controls="favourites" role="tab" data-toggle="tab">favourites</a></li>
+								</ul>
+					
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="personal">
+									<div class="ed_inner_dashboard_info">
+										<div class="ed_course_single_info">
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 1 weeks, 2 days ago</span>
+												<p>Student adler braxton started the course Course Status</p>
+											</div> 
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 1 weeks, 4 days ago</span>
+												<p>Student baldwin dallas started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 1 weeks, 3 days ago</span>
+												<p>Student carney Tate started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 2 weeks, 4 days ago</span>
+												<p>Student dwight easton started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 2 weeks, 5 days ago</span>
+												<p>Student elbert wade started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 2 weeks, 2 days ago</span>
+												<p>Student hailey kyler started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 3 weeks, 3 days ago</span>
+												<p>Student graham ryder started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 3 weeks, 6 days ago</span>
+												<p>Student jaxon keegan started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 4 weeks, 2 days ago</span>
+												<p>Student kealy sage started the course Course Status</p>
+											</div>
+											<div class="ed_add_students">
+												<img src="http://placehold.it/50X50" alt="">
+												<span>student started course course status 4 weeks, 4 days ago</span>
+												<p>Student lavern gunner started the course Course Status</p>
+											</div>
+											<div class="col-lg-12">
+											<div class="row">
+												<div class="ed_blog_bottom_pagination ed_toppadder40">
+												<nav>
+													<ul class="pagination">
+														<li><a href="#">1</a></li>
+														<li><a href="#">2</a></li>
+														<li><a href="#">3</a></li>
+														<li class="active"><a href="#">Next <span class="sr-only">(current)</span></a></li>
+													</ul>
+												</nav>
+												</div>
+											</div>
+											</div>
+										</div>
+									</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="mentions">
+									<div class="ed_inner_dashboard_info">
+										<h2>sorry, there was no mentions event found. please try a different filter</h2>
+									</div>
+									</div>
+									<div role="tabpanel" class="tab-pane" id="favourites">
+									<div class="ed_inner_dashboard_info">
+										<h2>sorry, there was no favourites event found. please try a different filter</h2>
+									</div>
+									</div>
+								</div>
+					
+							</div><!--tab End-->
+						</div>
+					</div>
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--instructor single end-->
+
+{% endblock %}

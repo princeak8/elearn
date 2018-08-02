@@ -1,0 +1,38 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+
+<div class="row" style="margin-top: 30px; margin-bottom: 40px;">
+	<div class="col-md-12" style="text-align: center;">
+		<h2>QUESTIONS ON {{data['course'].title}}</h2>		
+	</div>
+
+	<div class="col-md-12">
+		<table class="table table-responsive">
+			<thead>
+				<th style="text-align: center;">S/N</th>
+				<th style="text-align: center;">QUESTION</th>
+				<th style="text-align: center;">LESSON</th>
+				<th style="text-align: center;">ASKED BY</th>
+				<th style="text-align: center;">RESPONSES</th>
+			</thead>
+			<tbody>
+			{%  set n = 0 %}
+			{% for question in data['questions']: %}
+			{% set n = n + 1 %}
+				<tr>
+					<td style="text-align: center;">{{n}}</td>
+					<td>{{question['question']}}</td>
+					<td style="text-align: center;">{{question['lesson']['title']}}</td>
+					<td style="text-align: center;">{{question['student']['name']}}</td>
+					<td style="text-align: center;">0</td>
+					<td style="text-align: center;"><a class="btn btn-primary" href="/instructor/student_question/{{question['_id']}}">VIEW</a></td>
+				</tr>
+			{% endfor %}
+				
+			</tbody>
+		</table>
+	</div>
+</div>
+
+{% endblock %}
