@@ -57,7 +57,7 @@ class StudentController():
 			return redirect(url_for('index'))
 
 
-	def select_interests():
+	def select_interests(self):
 		data = {}
 		data['loggedIn'] = False
 
@@ -78,7 +78,7 @@ class StudentController():
 			return redirect(url_for('index'))
 
 
-	def toggle_interests():
+	def toggle_interests(self):
 		if request.method == 'POST':
 			newStudent_interest = Student_interest()
 			interest = request.form['interest']
