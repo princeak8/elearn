@@ -1,5 +1,7 @@
 from flask import Flask, render_template, url_for, request, session, redirect, json, jsonify
 from models.models import mongo, Student, Instructor, Interest, Student_interest, Course_interest, Course, Lesson, Student_subscription, Student_question
+
+from forms import CourseForm
 import bcrypt
 import locale
 from bson import ObjectId
@@ -13,6 +15,8 @@ class InstructorController():
 	def  __init__(self):
 		if 'instructor' in session:
 			self.loggedIn = True
+		else:
+			return redirect(url_for('instructor_login'))
 
 		self.newInstructor = Instructor()
 		self.newStudent_interest = Student_interest()
@@ -22,16 +26,15 @@ class InstructorController():
 		self.newStudent_subscription = Student_subscription()
 		self.newStudent_question = Student_question()
 
-	def dashboard(self):
-		if self.loggedIn != True:
-			return redirect(url_for('instructor_login'))
-
+	def dashboard_data(self):
 		data = {}
 		data['logged_in'] = True 
 		data['courses'] = []
 		data['instructor'] = self.newInstructor.get_instructor_by_name(session['instructor']['name'])
 		fields = {"instructor_id":data['instructor']['_id']}
 		courses = self.newCourse.get_courses(fields)
+		data['new_course_form'] = CourseForm()
+		data['new_course_form'].instructor_id.data = data['instructor']['_id']
 		if courses:
 			for course in courses:
 				course_subscription = self.newStudent_subscription.get_course_subscriptions(course['_id'])
@@ -40,40 +43,27 @@ class InstructorController():
 				course['questions'] = questions.count()
 				data['courses'].append(course)
 
+		return data
+
+
+	def dashboard(self):
+
+		data = self.dashboard_data()
 		return render_template("instructor/dashboard.html", data=data)
 
 
-	def select_interests():
-		data = {}
-		data['loggedIn'] = False
+	def courses(self):
+		data = self.dashboard_data()
 
-		if 'student' in session:
-			student_interests = self.newStudent_interest.get_student_interests(session['student']['name'])
-			data['selected_interests'] = []
-			if student_interests:
-				for interest in student_interests:
-					#print(interest)
-					data['selected_interests'].append(interest['interest_id']) 
+		data['view'] = 'courses'
 
-			data['loggedIn'] = True
-			data['student'] = session['student']
-			data['interests'] = self.newInterest.interests()
+		return render_template("instructor/dashboard.html", data=data)
 
-			return render_template("fields.html", data=data)
-		else:
-			return redirect(url_for('index'))
+	def new_course(self):
+		data = self.dashboard_data()
+
+		data['view'] = 'new'
+
+		return render_template("instructor/dashboard.html", data=data)
 
 
-	def toggle_interests():
-		if request.method == 'POST':
-			newStudent_interest = Student_interest()
-			interest = request.form['interest']
-			student_name = session['student']['name']
-			action = request.form['action']
-			if action == 'add':
-				data = newStudent_interest.add(student_name, interest)
-
-			if action == 'remove':
-				data = newStudent_interest.remove(student_name, interest)
-			
-			return json.dumps({'status':data});
