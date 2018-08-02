@@ -1,6 +1,7 @@
 from flask_pymongo import PyMongo
 import bcrypt
 import datetime as date
+from bson import ObjectId
 
 mongo = PyMongo()
 
@@ -56,7 +57,7 @@ class Course():
     def get_courses(self, field):
         fields = {}
         for key, val in field.items():
-            fields[key] = val                                                     
+            fields[key] = val
 
         return mongo.db.courses.find(fields)
 
@@ -65,6 +66,23 @@ class Course():
 
     def get_course_by_id(self, ids):
         return mongo.db.courses.find_one({"_id": ids})
+
+    def add(self, title, cover_photo, description, instructor_id):
+        courses = mongo.db.courses
+        #course_id = mongo.db.courses.find_one({"_id":course_id})
+        try:
+            result = courses.insert({"title": title, "cover_photo": cover_photo, "description": description, "instructor_id": instructor_id, "price": None, "approved": 0})
+            return 'OK'
+        except Exception, e:
+            return e
+
+    def update(self, course_id, title, cover_photo, description):
+        #course_id = mongo.db.courses.find_one({"_id":course_id})
+        try:
+            result = mongo.db.courses.update({"_id": course_id}, {"$set": {"title": title, "cover_photo": cover_photo, "description": description}})
+            return 'OK'
+        except Exception, e:
+            return e
 
 class Lesson():
 
@@ -98,6 +116,23 @@ class Lesson():
                     n = n + 1
                     
         return free_lessons_id
+
+    def add(self, title, url, description, duration, course_id):
+        lessons = mongo.db.lessons
+        #course_id = mongo.db.courses.find_one({"_id":course_id})
+        try:
+            result = lessons.insert({"title": title, "video_url": url, "description": description, "duration": duration, "course_id": course_id})
+            return 'OK'
+        except:
+            return 'ERROR'
+
+    def update(self, lesson_id, title, url, description, duration):
+        #course_id = mongo.db.courses.find_one({"_id":course_id})
+        try:
+            result = mongo.db.lessons.update({"_id": lesson_id}, {"$set": {"title": title, "video_url": url, "description": description, "duration": duration}})
+            return 'OK'
+        except Exception, e:
+            return e
 
 
 class Student_interest():
@@ -211,7 +246,7 @@ class Student_question():
         try:
             answered = 0
             date_asked = date.datetime.now()
-            result = self.student_questions.insert({"lesson_id": lesson_id, "course_id": lesson_id, "student_id": student_id, "question":question, "answered":answered, "date_asked":date_asked})
+            result = self.student_questions.insert({"lesson_id": lesson_id, "course_id": course_id, "student_id": student_id, "question":question, "answered":answered, "date_asked":date_asked})
             return 'OK'
         except:
             return 'ERROR'
@@ -225,5 +260,31 @@ class Student_question():
     def get_question(self, question_id):
         return mongo.db.Student_questions.find_one({"_id": question_id})
 
+class Question_response():
+
+    def __init__(self):
+        self.question_responses = mongo.db.question_responses
+
+
+    def instructor(self, question_id, instructor_id, response):
+        try:
+            responded = date.datetime.now()
+            student_id = 0
+            result = self.question_responses.insert({"question_id": question_id, "instructor_id": instructor_id, "student_id": student_id, "response": response, "date":responded})
+            return 'OK'
+        except:
+            return 'ERROR'
+
+    def student(self, question_id, student_id, response):
+        try:
+            responded = date.datetime.now()
+            instructor_id = 0
+            result = self.question_responses.insert({"question_id": question_id, "instructor_id": instructor_id, "student_id": student_id, "response": response, "date":responded})
+            return 'OK'
+        except:
+            return 'ERROR'
+
+    def get_question_responses(self, question_id):
+        return mongo.db.question_responses.find({"question_id": question_id})
 
 
