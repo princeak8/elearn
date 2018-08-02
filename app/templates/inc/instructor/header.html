@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Educo Multipurpose Responsive HTML Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description"  content="Educo"/>
+<meta name="keywords" content="Educo, html template, Education template" />
+<meta name="author"  content="Kamleshyadav"/>
+<meta name="MobileOptimized" content="320" />
+
+<!--srart theme style -->
+<link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet" type="text/css"/>
+<!-- end theme style -->
+<!-- favicon links -->
+<link rel="shortcut icon" type="image/png" href="images/header/favicon.png" />
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.12.2.js')}}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js')}}"></script> 
+
+</head>
+<body>
+<!--Page main section start-->
+<div id="educo_wrapper">
+<!--Header start-->
+<header id="ed_header_wrapper">
+	<div class="ed_header_top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<p>welcome to Instructor Section</p>
+				{% if session['instructor']: %}
+					<div class="ed_info_wrapper">
+
+						<p>
+							WELCOME <b>{{ session['instructor']['name'] }}</b>
+							<a href="/instructor/signout" class="btn btn-danger">Sign Out</a>
+						</p>
+				{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>

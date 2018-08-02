@@ -1,0 +1,36 @@
+<div class="tab-pane {% if not data['view'] %} active {% endif %}" id="b">
+						<div class="ed_dashboard_inner_tab">
+							<div role="tabpanel">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#view" aria-controls="view" role="tab" data-toggle="tab">instructor Detail</a></li>
+								</ul>
+					
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="view">
+									<div class="ed_inner_dashboard_info">
+										<h2> {{ session['instructor']['name'] }} (instructor)</h2>
+										<table id="profile_view_settings">
+											<thead>
+												<tr>
+													<th>Name</th>
+													<th>Location</th>
+													<th>Intro</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>{{ session['instructor']['name'] }}</td>
+													<td>{{ data['instructor']['location'] }}</td>
+													<td>{{ data['instructor']['about'] }}.</td>
+												</tr>												
+											</tbody>
+										</table>
+									</div>
+									</div>
+								</div>
+					
+							</div><!--tab End-->
+						</div>
+					</div>

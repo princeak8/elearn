@@ -1,0 +1,175 @@
+<div class="tab-pane {% if data['view'] %} active {% endif %}" id="a">
+	<div class="ed_dashboard_inner_tab">
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" {% if data['view'] and data['view']=='courses' %} class="active" {% endif %} >
+					<a href="#my" aria-controls="my" role="tab" data-toggle="tab">courses</a>
+				</li>
+				<li role="presentation">
+					<a href="#instructing" aria-controls="instructing" role="tab" data-toggle="tab">upcoming courses</a>
+				</li>
+				<li role="presentation" {% if data['view'] and data['view']=='new' %} class="active" {% endif %}>
+					<a href="#new" aria-controls="new" role="tab" data-toggle="tab">New Course</a>
+				</li>
+			</ul>
+					
+			<!-- Tab panes -->
+			<div class="tab-content">
+
+				<div role="tabpanel" class="tab-pane {% if data['view'] and data['view']=='courses' %} active {% endif %}" id="my">
+					<div class="ed_inner_dashboard_info">
+						<h2>all courses by {{ session['instructor']['name'] }}</h2>
+						
+						<div class="row">
+							<div class="ed_mostrecomeded_course_slider">
+							{% if data['courses']|length == 0: %}
+								<p> You have no courses yet </p>
+							{% else: %}
+							{% for course in data['courses']: %}
+								<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ed_bottompadder20">
+									
+									<div class="ed_item_img">
+										<img src="http://placehold.it/248X248" alt="item1" class="img-responsive">
+									</div>
+									
+									<div class="ed_item_description ed_most_recomended_data">
+										
+										<h4>
+											<a href="/instructor/course/{{course._id}}">{{course.title}} </a>
+											{% if course.price %}
+												<span>{{ "N{:,.2f}".format(course.price) }}</span>
+											{% else %}
+												<span class="alert-warning">PENDING APPROVAL</span>
+											{% endif %}
+										</h4>
+										
+										<div class="row">
+											<div class="ed_rating">
+												
+												<div class="col-lg-6 col-md-7 col-sm-6 col-xs-6">
+													<div class="row">
+														<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+															<div class="ed_stardiv">
+																<div class="star-rating"><span style="width:80%;"></span></div>
+															</div>
+														</div>
+														
+														<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+															<div class="row">
+																<p>(5 review)</p>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<div class="col-lg-6 col-md-5 col-sm-6 col-xs-6">
+													<div class="ed_views">
+														<i class="fa fa-users"></i>
+														<span>{{course['subscribed']}} student(s)</span>
+													</div>
+												</div>
+
+											</div>
+
+											<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" style="font-weight: bold">
+											{% if course['questions'] > 0: %}
+												<div class="ed_views">
+													<span class="pull-left">{{course['questions']}}Question(s)</span>
+													<a class="btn btn-primary pull-right" href="course_questions/{{course.title}}" target="new">
+																				View
+													</a>
+												</div>
+											{% else: %}
+												<p> There are no Questions for this course </p>
+											{% endif %}
+											</div>
+
+										</div>
+										
+										<p>{{ course.description }}.</p>
+
+									</div>
+								</div>
+								{% endfor %}
+							{% endif %}
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div role="tabpanel" class="tab-pane" id="instructing">
+					<div class="ed_inner_dashboard_info">
+						<h2>upcoming courses by {{ session['instructor']['name'] }}</h2>
+					</div>
+				</div>
+
+				<div role="tabpanel" class="tab-pane {% if data['view'] and data['view']=='new' %} active {% endif %}" id="new">
+					<div class="ed_inner_dashboard_info">
+						<h3>ADD A NEW COURSE</h3>
+						
+						<form action="{{ url_for('create_course') }}" method="post" enctype="multipart/form-data" class="ed_contact_form ed_toppadder40">
+						{% with message = get_flashed_messages() %}
+							{% if message: %}
+								<p class="alert-danger">
+									There seems to be a problem: {{message[0]}}
+								</p>
+							{% endif %}
+						{% endwith %}
+
+							{{ data['new_course_form'].hidden_tag('csrf_token') }}
+
+							<div class="form-group">
+								{{ data['new_course_form'].title.label }}
+
+								{% if data['new_course_form'].title.errors %}
+									{% for error in data['new_course_form'].title.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_course_form'].title(class="form-control", placeholder="Title of Course", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['new_course_form'].cover_photo.label }}
+
+								{% if data['new_course_form'].cover_photo.errors %}
+									{% for error in data['new_course_form'].cover_photo.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_course_form'].cover_photo(class="form-control", placeholder="Cover Photo", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['new_course_form'].description.label }}
+
+								{% if data['new_course_form'].description.errors %}
+									{% for error in data['new_course_form'].description.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_course_form'].description(class="form-control", placeholder="Description of Course", required="required") }}
+							</div>
+
+								{% if data['new_course_form'].instructor_id.errors %}
+									{% for error in data['new_course_form'].instructor_id.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_course_form'].instructor_id() }}
+
+							{{ data['new_course_form'].submit(class="btn-primary form-control") }}
+						</form>
+					</div>
+				</div>
+
+			</div>
+					
+		</div><!--tab End-->
+	</div>
+</div>

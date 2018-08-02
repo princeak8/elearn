@@ -1,0 +1,119 @@
+<div class="tab-pane active" id="d">
+	<div class="ed_dashboard_inner_tab">
+		<div role="tabpanel">
+			<!-- Nav tabs -->
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" class="active">
+					<a href="#lessons" aria-controls="view" role="tab" data-toggle="tab">{{data['course']['title']}}</a>
+				</li>
+				<li role="presentation">
+					<a href="#description" aria-controls="view" role="tab" data-toggle="tab">description</a>
+				</li>
+				<li role="presentation">
+					<a href="#new" aria-controls="view" role="tab" data-toggle="tab">New Lesson</a>
+				</li>
+			</ul>
+					
+			<!-- Tab panes -->
+			<div class="tab-content">
+				<div role="tabpanel" class="tab-pane active" id="lessons">
+					<div class="ed_inner_dashboard_info">
+						<h2>LESSONS</h2>
+						<div class="ed_time_executor ed_toppadder40">
+						<ul>
+						{% for lesson in data['course_lessons']:  %}
+							<li style="background-color:#ffffff;color:blue;">
+								<a style="color: #167ac6; cursor: pointer;" href="/instructor/lesson/{{ lesson['_id'] }}"> 
+									{{ lesson['title'] }}
+								</a> 
+								<span style="color:#afafb7;">{{ lesson['duration'] }} Minutes</span>
+							</li>
+						{% endfor %}
+						</ul>
+						</div>
+					</div>
+				</div>
+
+				<div role="tabpanel" class="tab-pane" id="description">
+					<div class="ed_inner_dashboard_info">
+						<h2>DESCRIPTION OF COURSE</h2>
+						<p>
+							This is the description of this course
+						</p>
+					</div>
+				</div>
+
+				<div role="tabpanel" class="tab-pane" id="new">
+					<div class="ed_inner_dashboard_info">
+						<h3>ADD A NEW LESSON</h3>
+						
+						<form action="{{ url_for('new_lesson') }}" method="post" class="ed_contact_form ed_toppadder40">
+
+							{{ data['new_lesson_form'].hidden_tag('csrf_token') }}
+
+							<div class="form-group">
+								{{ data['new_lesson_form'].title.label }}
+
+								{% if data['new_lesson_form'].title.errors %}
+									{% for error in data['new_lesson_form'].title.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_lesson_form'].title(class="form-control", placeholder="Title of Lesson", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['new_lesson_form'].video_url.label }}
+
+								{% if data['new_lesson_form'].video_url.errors %}
+									{% for error in data['new_lesson_form'].video_url.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_lesson_form'].video_url(class="form-control", placeholder="Lesson Video Url", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['new_lesson_form'].description.label }}
+
+								{% if data['new_lesson_form'].description.errors %}
+									{% for error in data['new_lesson_form'].description.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_lesson_form'].description(class="form-control", placeholder="Description of Lesson", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['new_lesson_form'].duration.label }}
+
+								{% if data['new_lesson_form'].duration.errors %}
+									{% for error in data['new_lesson_form'].duration.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_lesson_form'].duration(type="number", class="form-control", placeholder="Duration in Minutes.(Alphabets are not allowed)", required="required") }}
+							</div>
+
+								{% if data['new_lesson_form'].course_id.errors %}
+									{% for error in data['new_lesson_form'].course_id.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['new_lesson_form'].course_id() }}
+
+							{{ data['new_lesson_form'].submit(class="btn-primary form-control") }}
+						</form>
+					</div>
+				</div>
+
+			</div>
+					
+		</div><!--tab End-->
+	</div>
+</div>
