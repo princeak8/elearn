@@ -10,7 +10,7 @@ import json
 
 class RegisterationController():
 
-	def signup():
+	def signup(self):
 		form = SignupForm()
 
 		if request.method == 'POST':
