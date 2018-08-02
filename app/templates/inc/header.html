@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Educo Multipurpose Responsive HTML Template</title>
+<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+<meta name="description"  content="Educo"/>
+<meta name="keywords" content="Educo, html template, Education template" />
+<meta name="author"  content="Kamleshyadav"/>
+<meta name="MobileOptimized" content="320" />
+
+<!--srart theme style -->
+<link href="{{ url_for('static', filename='css/main.css')}}" rel="stylesheet" type="text/css"/>
+<!-- end theme style -->
+<!-- favicon links -->
+<link rel="shortcut icon" type="image/png" href="images/header/favicon.png" />
+
+<script type="text/javascript" src="{{ url_for('static', filename='js/jquery-1.12.2.js')}}"></script> 
+<script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.js')}}"></script> 
+
+</head>
+<body>
+<!--Page main section start-->
+<div id="educo_wrapper">
+<!--Header start-->
+<header id="ed_header_wrapper">
+	<div class="ed_header_top">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<p>welcome to our new session of education</p>
+					<div class="ed_info_wrapper">
+
+					{% if data is defined %}
+
+						{% if(data['loggedIn'] == True): %}
+
+						<p>
+							WELCOME <b>{{ data['student']['name'] }}</b>
+							<a href="/signout" class="btn btn-danger">Sign Out</a>
+						</p>
+
+						{% else: %}
+
+						<a href="#" id="login_button">StudentLogin</a>
+							<div id="login_one" class="ed_login_form">
+								<h3>log in</h3>
+								<form action="{{ url_for('student_login') }}" method="post" class="form" name="login_form">
+									<div id="login-error" style="width: 100%; height: 50px; padding: 0px; display: none;">
+										<p class="alert-error" style="color: red; padding: 0px;"></p>
+									</div>
+
+									<div class="form-group">
+										{{ data['form'].email.label }}
+										{{ data['form'].email(class="form-control", placeholder="Email Address", required="required") }}
+									</div>
+									<div class="form-group">
+										{{ data['form'].password.label }}
+										{{ data['form'].password(class="form-control", placeholder="Password", required="required") }}
+									</div>
+									
+									<div class="form-group">
+										{{ data['form'].submit(class="btn-primary", id="login-btn") }}
+										<a href="signup">registration</a>	
+									</div>
+								</form>
+							</div>
+						{% endif %}
+					{% endif %}
+							
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
