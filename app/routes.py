@@ -77,10 +77,10 @@ def toggle_interests():
 	student = StudentController()
 	return student.toggle_interests()
 
-@app.route("/single_course/<title>", methods=['GET'])
-def single_course(title):
+@app.route("/single_course/<courseId>", methods=['GET'])
+def single_course(courseId):
 	course = CourseController()
-	return course.single_course(title)
+	return course.single_course(courseId)
 
 @app.route("/course_lesson/<course_title>/<lesson_title>", methods=['GET'])
 def course_lesson(course_title, lesson_title):
@@ -88,10 +88,10 @@ def course_lesson(course_title, lesson_title):
 	#lesson = course.course_lesson(title)
 	return course.course_lesson(course_title, lesson_title)
 
-@app.route("/purchase_course/<title>", methods=['GET'])
-def purchase_course(title):
+@app.route("/purchase_course/<courseId>", methods=['GET'])
+def purchase_course(courseId):
 	course = CourseController()
-	return course.purchase_course(title)
+	return course.purchase_course(courseId)
 
 @app.route('/update_cart', methods=['POST', 'GET'])
 def update_cart():
@@ -128,6 +128,10 @@ def ask_question():
 	course = CourseController()
 	return course.ask_question()
 
+@app.route('/student/question/<questionId>')
+def question(questionId):
+	question = QController()
+	return question.question(questionId)
 
 @app.route('/instructor/login', methods=['POST', 'GET'])
 def instructor_login():
@@ -146,6 +150,46 @@ def instructor_dashboard():
 	instructor = InstructorController()
 	return instructor.dashboard()
 
+@app.route('/instructor/courses')
+def instructor_courses():
+	instructor = InstructorController()
+	return instructor.courses()
+
+@app.route('/instructor/new_course')
+def new_course():
+	instructor = InstructorController()
+	return instructor.new_course()
+
+@app.route('/instructor/create_course', methods=['POST'])
+def create_course():
+	course = InstructorCourse()
+	return course.create()
+
+@app.route('/instructor/course/<courseId>')
+def instructor_course(courseId):
+	course = InstructorCourse()
+	return course.course(courseId)
+
+@app.route('/instructor/new_lesson', methods=['POST'])
+def new_lesson():
+	course = InstructorCourse()
+	return course.new_lesson()
+
+@app.route('/instructor/lesson/<lessonId>')
+def instructor_lesson(lessonId):
+	course = InstructorCourse()
+	return course.lesson(lessonId)
+
+@app.route('/instructor/edit_lesson/<lessonId>')
+def instructor_edit_lesson(lessonId):
+	course = InstructorCourse()
+	return course.edit_lesson(lessonId)
+
+@app.route('/instructor/update_lesson', methods=['POST'])
+def update_lesson():
+	course = InstructorCourse()
+	return course.update_lesson()
+
 @app.route('/instructor/course_questions/<title>')
 def instructor_course_questions(title):
 	question = QuestionController()
@@ -156,7 +200,18 @@ def student_question(questionId):
 	question = QuestionController()
 	return question.question(questionId)
 
-def set_session_val():                 
+@app.route('/instructor/question_response', methods=['POST'])
+def question_instructor_response():
+	question = QuestionController()
+	return question.respond()
+
+@app.route('/student/question_response', methods=['POST'])
+def question_student_response():
+	question = QController()
+	return question.respond()
+
+def set_session_val():
+>>>>>>> master
 	session['mylist'] = {}
 	session['cart'] = {}
 	session['cart']['key'] = 'val'
