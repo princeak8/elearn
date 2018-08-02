@@ -42,5 +42,3 @@ class SubscriptionController():
 
 		else:
 			return redirect(url_for('dashboard'))
-
-			
