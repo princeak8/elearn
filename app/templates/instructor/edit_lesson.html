@@ -1,0 +1,115 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+<!--instructor single start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="/static/images/profile/{{ data['instructor']['photo'] }}" alt="Profile Image" class="img-responsive" />
+					</div>
+					<h3>{{ session['instructor']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li><a href="/instructor">HOME</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					<h3>
+						<a href="/instructor/course/{{data['course']['_id']}}">
+							{{data['course']['title']}}
+						</a>
+						<br/>
+						<a href="/instructor/lesson/{{data['lesson']['_id']}}" style="color: #167ac6;">
+							{{data['lesson']['title']}}
+						</a> 
+						- EDIT LESSON
+					</h3>
+					
+					<form action="{{ url_for('update_lesson') }}" method="post" class="ed_contact_form ed_toppadder40">
+						{% with status = get_flashed_messages() %}
+							{% if status %}
+								{% if status[0]=='1' %}
+									<p class="alert-success">
+										Lesson updated successfully
+									</p>
+								{% else %}
+									<p class="alert-danger">
+										There was a problem while trying to update lesson. Please try again later
+									</p>
+								{% endif %}
+							{% endif %}
+						{% endwith %}
+
+							{{ data['edit_lesson_form'].hidden_tag('csrf_token') }}
+
+							<div class="form-group">
+								{{ data['edit_lesson_form'].title.label }}
+
+								{% if data['edit_lesson_form'].title.errors %}
+									{% for error in data['edit_lesson_form'].title.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_lesson_form'].title(class="form-control", placeholder="Title of Lesson", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['edit_lesson_form'].video_url.label }}
+
+								{% if data['edit_lesson_form'].video_url.errors %}
+									{% for error in data['edit_lesson_form'].video_url.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_lesson_form'].video_url(class="form-control", placeholder="Lesson Video Url", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['edit_lesson_form'].description.label }}
+
+								{% if data['edit_lesson_form'].description.errors %}
+									{% for error in data['edit_lesson_form'].description.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_lesson_form'].description(class="form-control", placeholder="Description of Lesson", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['edit_lesson_form'].duration.label }}
+
+								{% if data['edit_lesson_form'].duration.errors %}
+									{% for error in data['edit_lesson_form'].duration.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_lesson_form'].duration(type="number", class="form-control", placeholder="Duration in Minutes.(Alphabets are not allowed)", required="required") }}
+							</div>
+
+							{{ data['edit_lesson_form'].lesson_id() }}
+
+							{{ data['edit_lesson_form'].submit(class="btn-primary form-control", value="EDIT") }}
+						</form>
+
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--instructor single end-->
+
+{% endblock %}

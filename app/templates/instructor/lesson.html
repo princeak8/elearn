@@ -1,0 +1,79 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+<!--instructor single start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="/static/images/profile/{{ data['instructor']['photo'] }}" alt="Profile Image" class="img-responsive" />
+					</div>
+					<h3>{{ session['instructor']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li><a href="/instructor">HOME</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					<h3><a style="color: #167ac6;" href="">{{data['course']['title']}}</a></h3>
+					<h4>{{data['lesson']['title']}}({{data['lesson_questions']|length}})
+					[<a style="color: #167ac6;" href="/instructor/edit_lesson/{{ data['lesson']['_id'] }}">EDIT</a>]
+					<span style="margin-left: 55%;">{{ data['lesson']['duration'] }} min</span>
+					</h4>
+
+					<div class="ed_video_section" style="width: 80%; margin-bottom: 0px; padding-bottom: 0px;">
+						<div class="embed-responsive embed-responsive-16by9" style="height: 250px; padding-bottom: 0px;">
+							<div class="ed_video" style="width: width: 80%">
+								<img src="http://placehold.it/806X450" class="img-responsive" alt="1" style="height: 250px;" />
+								<div class="ed_img_overlay">
+									<a href="#"><i class="fa fa-chevron-right"></i></a>
+								</div>
+							</div>
+							<iframe id="educo_video" class="embed-responsive-item" src="https://www.youtube.com/embed/8mb-0qbq984" allowfullscreen></iframe>
+						</div>
+					</div>
+
+					<div id="description" style="width: 80%">
+						{{data['lesson']['description']}}
+
+						<h4 style="color: #167ac6; cursor: pointer;" data-toggle="collapse" data-target="#questions">
+							Questions({{data['lesson_questions']|length}})
+						</h4>
+
+						<div id="questions" class="collapse" style="margin-top: 30px">
+							{% if data['lesson_questions']|length == 0: %}
+								<p>There are no Questions on this lesson Yet</p>
+							
+							{% else: %}
+								<div id="question-break" style="clear: both;"></div>
+								{% for question in data['lesson_questions']: %}
+									<div style="margin-top: 10px; border: #DDD thin outset">
+										<p class="pull-right">{{question['date_asked']}}</p>
+										<p>{{question['student']}} asked</p>
+										<p>{{question['quest']['question']}}</p>
+										<a href="/instructor/student_question/{{question['quest']['_id']}}" class="btn btn-primary pull-right">RESPONSES({{question['responses'].count()}})</a>
+										<div style="clear: both;"></div>
+									</div>
+								{% endfor %}
+
+							{% endif %}
+						</div>
+					</div>
+
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--instructor single end-->
+
+{% endblock %}

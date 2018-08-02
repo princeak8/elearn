@@ -1,0 +1,45 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+<!--instructor single start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="/static/images/profile/{{ data['instructor']['photo'] }}" alt="Profile Image" class="img-responsive" />
+					</div>
+					<h3>{{ session['instructor']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li {% if not data['view'] %} class="active" {% endif %} >
+						  	<a href="#b" data-toggle="tab">profile</a>
+						  </li>
+						  <li {% if data['view'] %} class="active" {% endif %}>
+						  	<a href="#a" data-toggle="tab">
+						  		courses <span>{{data['courses']|length}}</span>
+						  	</a>
+						  </li>
+						  <li><a href="#c" data-toggle="tab">activity</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					{% include 'inc/instructor/profile_tab.html' %}
+					{% include 'inc/instructor/courses_tab.html' %}
+					{% include 'inc/instructor/activity_tab.html' %}
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--instructor single end-->
+
+{% endblock %}
