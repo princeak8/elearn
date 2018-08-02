@@ -1,9 +1,5 @@
 from flask import Flask, render_template, url_for, request, session, redirect, json, jsonify
-<<<<<<< HEAD
-from models.models import mongo, Student, Instructor, Interest, Student_interest, Course_interest, Course, Lesson, Student_subscription, Student_question
-=======
 from models.models import mongo, Student, Instructor, Interest, Student_interest, Course_interest, Course, Lesson, Student_subscription, Student_question, Question_response
->>>>>>> master
 
 #from models.Student import Student
 #from models.Instructor import Instructor
@@ -38,14 +34,9 @@ class CourseController():
 		self.newInstructor = Instructor()
 		self.newLesson = Lesson()
 		self.newStudent_question = Student_question()
-<<<<<<< HEAD
-
-	def single_course(self, title):
-=======
 		self.newQuestion_response = Question_response()
 
 	def single_course(self, courseId):
->>>>>>> master
 		data = {}
 		data['loggedIn'] = False
 		data['course_lessons'] = []
@@ -54,11 +45,7 @@ class CourseController():
 		data['loggedIn'] = True
 		data['student'] = session['student']
 
-<<<<<<< HEAD
-		course = self.newCourse.get_course_by_title(title)
-=======
 		course = self.newCourse.get_course_by_id(ObjectId(courseId))
->>>>>>> master
 		if course:
 			student_id = ObjectId(session['student']['id'])
 			similar_courses = self.newCourse_interest.get_similar_courses(course['_id'])
@@ -116,10 +103,7 @@ class CourseController():
 					question['student'] = self.newStudent.get_student_by_id(quest['student_id'])['name']
 					question['date_asked'] = str(quest['date_asked'])
 					question['quest'] = quest 
-<<<<<<< HEAD
-=======
 					question['responses'] = self.newQuestion_response.get_question_responses(str(quest['_id']))
->>>>>>> master
 					data['lesson_questions'].append(question)
 
 			courseDuration = 0
@@ -152,11 +136,7 @@ class CourseController():
 			return redirect(url_for('dashboard'))
 
 
-<<<<<<< HEAD
-	def purchase_course(self, title):
-=======
 	def purchase_course(self, courseId):
->>>>>>> master
 		#session['test'] = 'this'
 		data = {}
 		data['loggedIn'] = False
@@ -179,11 +159,7 @@ class CourseController():
 		data['loggedIn'] = True
 		data['student'] = session['student']
 
-<<<<<<< HEAD
-		course = self.newCourse.get_course_by_title(title)
-=======
 		course = self.newCourse.get_course_by_id(ObjectId(courseId))
->>>>>>> master
 			#return jsonify(title)
 		instructor = self.newInstructor.get_instructor_by_id(course['instructor_id'])
 		courseLessons = self.newLesson.get_lesson_by_courseId(course['_id'])

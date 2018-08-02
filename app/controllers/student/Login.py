@@ -81,7 +81,7 @@ class LoginController():
 					session['instructor']['name'] = login_instructor['name']
 					return redirect(url_for('instructor_dashboard'))
 
-			session['instructor_login_error'] = 'Incorrect Email/Password'
+			session['instructor_login_error'] = 'Incorrect Email/[assword'
 			return render_template('instructor_login.html', form=form)
 
 		return render_template('instructor/login.html', form=form)
