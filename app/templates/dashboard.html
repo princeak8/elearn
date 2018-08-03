@@ -1,0 +1,111 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+
+<!--Breadcrumb end-->
+<!--single student detail start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="{{url_for('static', filename='images/student_black.jpg')}}" alt="Dashboard Image" />
+					</div>
+					<h3>{{ data['student']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li class="active"><a href="#dashboard" data-toggle="tab">dashboard</a></li>
+						  <li><a href="#courses" data-toggle="tab">Subscribed Courses <span>{{ data['subscribed']|length }}</span></a></li>
+						  <li><a href="#activity" data-toggle="tab">activity</a></li>
+						  <li><a href="#notification" data-toggle="tab">notifications <span>0</span></a></li>
+						  <li><a href="#profile" data-toggle="tab">profile</a></li>
+						  <li><a href="#setting" data-toggle="tab">setting</a></li>
+						  <li><a href="#forums" data-toggle="tab">forums</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					<div class="tab-pane active" id="dashboard">
+						<div class="ed_dashboard_tab_info">
+						<h1>hello, <span>student</span></h1>
+						<h1>welcome to dashboard</h1>
+						<p>Hi <strong>{{ data['student']['name'] }}</strong>, here you have to see and update your profile, subscribed courses, activities, notifications and other things. All the above updates can be modified from the left panel provided.</p>
+						{% if data['interest_courses']: %}
+							{% for course in data['interest_courses'] %}
+								{{ course.title }}
+							{% endfor %}
+						{% endif %}
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="ed_mostrecomeded_course_slider">
+
+					{% if data['interest_courses']: %}	
+						{% for course in data['interest_courses'] %}
+							<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ed_bottompadder20">
+								<div class="ed_item_img">
+									<img src="{{url_for('static', filename='images/study_course.jpg')}}" alt="item1" class="img-responsive">
+								</div>
+								<div class="ed_item_description ed_most_recomended_data">
+									<h4><a href="{{ url_for('single_course', title=course.title) }}"> {{ course.title }} </a><span>{{ "N{:,.2f}".format(course.price) }}</span></h4>
+									<div class="row">
+										<div class="ed_rating">
+											<div class="col-lg-6 col-md-7 col-sm-6 col-xs-6">
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="ed_stardiv">
+															<div class="star-rating"><span style="width:80%;"></span></div>
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="row">
+															<p>(5 review)</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-5 col-sm-6 col-xs-6">
+												<div class="ed_views">
+													<i class="fa fa-users"></i>
+													<span>{{course['subscribed']}} student(s)</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<p>{{ course.description }}.</p>
+									<a href="{{ url_for('single_course', title=course.title) }}" class="ed_getinvolved">Take Course<i class="fa fa-long-arrow-right"></i></a>
+								</div>
+							</div>
+						{% endfor %}
+					{% endif %}
+
+						</div>
+					</div>
+
+					{% include 'inc/student/subscribed.html' %}
+
+					{% include 'inc/student/activity.html' %}
+
+					{% include 'inc/student/notifications.html' %}
+
+					{% include 'inc/student/profile.html' %}
+
+					{% include 'inc/student/setting.html' %}
+
+					{% include 'inc/student/forums.html' %}
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--single student detail end-->
+
+{% endblock %}

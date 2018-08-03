@@ -1,0 +1,196 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<!--Breadcrumb start-->
+<!--Breadcrumb end-->
+<!--Single content start-->
+
+<div class="ed_graysection ed_toppadder80 ed_bottompadder80">
+  <div class="container">
+    <div class="row">
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<div class="ed_course_single_item">
+				<div class="ed_course_single_image">
+					
+					<div class="ed_video_section">
+						<div class="embed-responsive embed-responsive-16by9">
+							<div class="ed_video">
+								<img src="http://placehold.it/806X450" class="img-responsive" alt="1" />
+								<div class="ed_img_overlay">
+									<a href="#"><i class="fa fa-chevron-right"></i></a>
+								</div>
+							</div>
+							<script src="https://fast.wistia.com/embed/medias/jk7w6bpza6.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:66.56% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_jk7w6bpza6 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/jk7w6bpza6/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
+													</div>
+					</div>
+				
+				</div>
+			<div class="ed_course_single_info">
+				<h2 class="ed_toppadder20"><b>LESSON: </b>{{data['lesson']['title']}}</h2>
+				
+				<p>{{data['lesson']['description']}}.</p>
+				{% if data['lesson']['prev']: %}
+				<a href="/course_lesson/{{ data['lesson']['prev'] }}">
+					<button type="button" class="btn ed_btn pull-left ed_orange">previous lesson</button>
+				</a>
+				{% endif %}
+				{% if data['lesson']['nxt']: %}
+				<a href="/course_lesson/{{ data['lesson']['nxt'] }}">
+					<button type="button" class="btn ed_btn pull-right ed_orange">next lesson</button>
+				</a>
+				{% endif %}
+				
+			</div>
+			</div>	
+			<div class="ed_time_executor ed_toppadder40">
+				<ul>
+				{% for newLesson in data['course_lessons']: %}
+					<li><a href="/course_lesson/{{data['course']['title']}}/{{ newLesson['title'] }}">{{ newLesson['title'] }}</a> 
+					<span>{{ newLesson['duration'] }}Minutes</span></li>
+				{% endfor %}
+				</ul>
+			</div>
+				<nav class="btn btn-primary col-md-12" style="text-align: left;" data-toggle="collapse" data-target="#questions">
+					<h4 style="color: #FFF">Questions on {{data['lesson']['title']}} Lesson</h4>
+				</nav>
+
+				<div id="questions" class="collapse" style="margin-top: 30px">
+					{% if data['lesson_questions']|length == 0: %}
+						<p>There are no Questions on this lesson Yet</p>
+					
+					{% else: %}
+						<div id="question-break" style="clear: both;"></div>
+						{% for question in data['lesson_questions']: %}
+							<div style="margin-top: 10px; border: #DDD thin outset">
+								<p class="pull-right">{{question['date_asked']}}</p>
+								<p>{{question['student']}} asked</p>
+								<p>{{question['quest']['question']}}</p>
+							</div>
+						{% endfor %}
+
+					{% endif %}
+
+					<div id="question-form" style="margin-top: 10px;">
+						<span id="QMsg"></span>
+						<form name="QForm" class="ed_contact_form ed_toppadder40">
+
+							{{ data['QForm'].hidden_tag() }}
+
+							<div class="form-group">
+								{{ data['QForm'].question.label }}
+
+								{% if data['QForm'].question.errors %}
+									{% for error in data['QForm'].question.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['QForm'].question(class="form-control", placeholder="Please enter your Question Here", required="required") }}
+							</div>
+							<input type="hidden" name="lesson_id" value="{{data['lesson']['_id']}}">
+							<input type="hidden" name="course_id" value="{{data['lesson']['course_id']}}">
+							<input type="hidden" name="student" value="{{session['student']['name']}}">
+							{{ data['QForm'].submit(class="btn-primary form-control", id="QForm-submit-btn") }}
+						</form>
+					</div>
+				</div>
+			</div>
+		
+{% include 'inc/student/right_sidebar.html' %}
+
+	</div>
+  </div>  
+  
+</div>
+
+<!--Single content end-->
+<!--Newsletter Section six start-->
+<div class="ed_newsletter_section">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+						<div class="ed_newsletter_section_heading">
+							<h4>Let us inform you about everything important directly.</h4>
+						</div>
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 col-lg-offset-0 col-md-offset-0 col-sm-offset-3 col-xs-offset-3">
+						<div class="row">
+							<div class="ed_newsletter_section_form">
+								<form class="form">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<input class="form-control" type="text" placeholder="Newsletter Email" />
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+										<button class="btn ed_btn ed_green">confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+	</div>
+</div>
+<!--Newsletter Section six end-->
+
+<script type="application/javascript">
+	$(document).ready(function() { //alert('working');
+		$('#QForm-submit-btn').click(function(e) { alert('submitted');
+			e.preventDefault();
+			var student = $('form[name=QForm] input[name=student]').val();
+			var lesson_id = $('form[name=QForm] input[name=lesson_id]').val();
+			var course_id = $('form[name=QForm] input[name=course_id]').val();
+			var question = $('form[name=QForm] textarea[name=question]').val();
+			var csrf_token = $('form[name=QForm] input[name=csrf_token]').val();
+			//alert(student);
+			$.ajax({
+				url:'/student/ask_question', 
+				data:{lesson_id: lesson_id, course_id: course_id, question: question, csrf_token: csrf_token}, 
+				type: "post", 
+				async: false, 
+				error: function(xhr, textStatus, errorThrown) {
+		  			console.log(xhr.responseText);
+					//alert('error');
+				},
+				success: function(response) { alert(response)
+					response = JSON.parse(response);
+					console.log(response.message);
+					if(response.status=='OK') { //successfull
+						//$('#QMsg').html('Your Question has been sent');
+						//$('#QMsg').removeClass('alert-error');
+						//$('#QMsg').addClass('alert-success');
+						var today = new Date();
+						var dd = today.getDate();
+						var mm = today.getMonth()+1; //January is 0!
+
+						var yyyy = today.getFullYear();
+						if(dd<10){
+						    dd='0'+dd;
+						} 
+						if(mm<10){
+						    mm='0'+mm;
+						} 
+						var today = dd+'/'+mm+'/'+yyyy;
+						var Qhtml  = '<div style="margin-top: 10px; border: #DDD thin outset">';
+							Qhtml += '<p class="pull-right">'+today+'</p>';
+							Qhtml += '<p>'+student+' asked</p>';
+							Qhtml += '<p>'+question+'</p>';
+							Qhtml += '</div>';
+							$('#QMsg').html('');
+							$('#question-break').append(Qhtml);
+					}else{
+						$('#QMsg').html('SORRY! There was a problem while trying to send your question. Try again later');
+						$('#QMsg').removeClass('alert-success');
+						$('#QMsg').addClass('alert-error');
+					}
+				}
+			})
+		})
+	})
+</script>
+
+{% endblock %}

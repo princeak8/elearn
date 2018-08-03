@@ -1,0 +1,286 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<!--Breadcrumb start-->
+<div class="ed_pagetitle">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-4 col-sm-6">
+				<div class="page_title">
+					<h2>Purchase Course</h2>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-sm-6">
+				<ul class="breadcrumb">
+					<li><a href="{{ url_for('index') }}">home</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li><a href="{{ url_for('single_course', title=data['course'].title) }}">{{ data['course'].title }}</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li>Purchase Course</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Breadcrumb end-->
+<!--Single content start-->
+<div class="ed_graysection ed_purchase_course ed_toppadder80 ed_bottompadder80 course_purchase_wrapper">
+  <div class="container">
+    <div class="row">
+	
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<div class="ed_course_single_item">
+				<div class="row">
+					<div class="col-lg-5 col-md-5 col-sm-12">
+						<div class="ed_course_single_image">
+							<img src="http://placehold.it/317X177" alt="event image" />
+						</div>
+					</div>
+					<div class="col-lg-7 col-md-7 col-sm-12">
+						<div class="ed_course_single_info">
+							<h2>{{ data['course'].title }}
+					<i class="fa fa-chevron-left"></i></li> <span>{{ "N{:,.2f}".format(data['course'].price) }}</span></h2>
+							<div class="ed_abbcart">
+							<form action="{{ url_for('update_cart') }}" method="post">
+								<input type="hidden" name="course_id" value="{{ data['course']._id }}">
+								<input type="submit" name="submit" value="Add To Cart">
+							</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12 col-md-12 col-sm-12">
+						<div class="ed_course_single_tab ed_toppadder40">
+							<div role="tabpanel">
+								<!-- Nav tabs -->
+								<ul class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#description" aria-controls="description" role="tab" data-toggle="tab">description</a></li>
+								</ul>
+					
+								<!-- Tab panes -->
+								<div class="tab-content">
+									<div role="tabpanel" class="tab-pane active" id="description">
+										<div class="ed_course_tabconetent">
+										<h2>about course</h2>
+											<p><h2>{{ data['course'].description }}.</p>							
+										</div>
+									</div>
+								</div>
+							</div>
+						</div><!--tab End-->
+					</div>
+				</div>
+				<div class="row">
+					<div class="ed_mostrecomeded_course_slider ed_toppadder40 ed_bottompadder40">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+							<h2 class="ed_bottompadder20">related courses</h2>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							<div class="ed_item_img">
+								<img src="http://placehold.it/249X249" alt="item1" class="img-responsive">
+							</div>
+							<div class="ed_item_description ed_most_recomended_data">
+									<h4><a href="course_single.html">Project Learning </a><span>£25</span></h4>
+									<div class="row">
+										<div class="ed_rating">
+											<div class="col-lg-6 col-md-7 col-sm-7 col-xs-6">
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="ed_stardiv">
+															<div class="star-rating"><span style="width:80%;"></span></div>
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="row">
+															<p>(5 review)</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-5 col-sm-5 col-xs-6">
+												<div class="ed_views">
+												<i class="fa fa-users"></i>
+												<span>35 students</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="course_detail">
+										<div class="course_faculty">
+											<img src="http://placehold.it/32X32" alt=""> <a href="instructor_dashboard.html">Joanna Simpson</a>
+										</div>
+									</div>
+									<p>Project-Based Learning is a flexible tool for framing given academic standards into flexible tool for framing.</p>
+									<a href="#" class="btn ed_btn ed_orange btn-sm">add to cart</a>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							<div class="ed_item_img">
+								<img src="http://placehold.it/249X249" alt="item1" class="img-responsive">
+							</div>
+							<div class="ed_item_description ed_most_recomended_data">
+									<h4><a href="course_single.html">Billing Seminar </a><span>free</span></h4>
+									<div class="row">
+										<div class="ed_rating">
+											<div class="col-lg-6 col-md-7 col-sm-7 col-xs-6">
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="ed_stardiv">
+															<div class="star-rating"><span style="width:80%;"></span></div>
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="row">
+															<p>(10 review)</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-5 col-sm-5 col-xs-6">
+												<div class="ed_views">
+												<i class="fa fa-users"></i>
+												<span>55 students</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="course_detail">
+										<div class="course_faculty">
+											<img src="http://placehold.it/32X32" alt=""> <a href="instructor_dashboard.html">DESPERATE SCOTT </a>
+										</div>
+									</div>
+									<p>We offer these billing seminars to AMA member physicians along with their staff (at least must attend the seminar)</p>
+									<a href="#" class="btn ed_btn ed_orange btn-sm">add to cart</a>
+							</div>
+						</div>
+						<div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+							<div class="ed_item_img">
+								<img src="http://placehold.it/249X249" alt="item1" class="img-responsive">
+							</div>
+							<div class="ed_item_description ed_most_recomended_data">
+									<h4><a href="course_single.html">programming </a><span>£38</span></h4>
+									<div class="row">
+										<div class="ed_rating">
+											<div class="col-lg-6 col-md-7 col-sm-7 col-xs-6">
+												<div class="row">
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="ed_stardiv">
+															<div class="star-rating"><span style="width:80%;"></span></div>
+														</div>
+													</div>
+													<div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+														<div class="row">
+															<p>(9 review)</p>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-lg-6 col-md-5 col-sm-5 col-xs-6">
+												<div class="ed_views">
+												<i class="fa fa-users"></i>
+												<span>60 students</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="course_detail">
+										<div class="course_faculty">
+											<img src="http://placehold.it/32X32" alt=""> <a href="instructor_dashboard.html">MIKE TUSSLE</a>
+										</div>
+									</div>
+									<p>Sometimes students need help with things unrelated to school. Where we come in and make sure you are happy .</p>
+									<a href="#" class="btn ed_btn ed_orange btn-sm">add to cart</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>	
+		</div>
+		<div class="col-lg-3 col-md-3 col-sm-12 col-xs-12">
+			<div class="sidebar_wrapper_upper">
+				<div class="sidebar_wrapper">
+					<aside class="widget widget_cart">
+						<div class="course_single_item">
+							<div class="course_single_info">
+							{{ data['reverse_cart']|length }}
+							{% if data['reverse_cart']|length > 0: %}
+								{% for item in data['reverse_cart']: %}
+									<div class="purchase_title">
+									<img src="http://placehold.it/80X45" alt="event image" /><a href="/remove_from_cart/{{ item['title'] }}" data-toggle="tooltip" data-placement="bottom" title="Remove Item">x</a>
+									<h5>{{ item['title'] }}</h5>
+									<p class="quantity">1 X <span>{{ "N{:,.2f}".format(item['cost']|int) }}</span></p>
+									</div>
+								{% endfor %}
+									<p class="total">Subtotal: <span>{{ "N{:,.2f}".format(data['sub_total']|int) }}</span></p>
+									<div class="button_cart">
+									<a href="/view_cart" class="btn ed_btn ed_green">view cart</a><a href="/checkout" class="btn ed_btn ed_orange pull-right">checkout</a>
+									</div>
+								
+							{% else: %}
+								<p> No Item in Cart </p>
+								<p class="total">Subtotal: <span>N0</span></p>
+							{% endif %}
+							</div>
+						</div>	
+					</aside>
+					
+					<aside class="widget widget_categories">
+						<h4 class="widget-title">related courses</h4>
+						<ul>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> Management Prog.</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> ethical heaking</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> Mobile Capabilities</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> Javascript Campus</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> Coding Seminar</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> html css</a></li>
+							<li><a href="course_single.html"><i class="fa fa-chevron-right"></i> it skills</a></li>
+							
+						</ul>
+					</aside>
+					
+				</div>
+			</div>
+		</div>
+<!--Sidebar End-->
+
+	</div>
+  </div>  
+  
+</div>
+
+<!--Single content end-->
+<!--Newsletter Section six start-->
+<div class="ed_newsletter_section">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+						<div class="ed_newsletter_section_heading">
+							<h4>Let us inform you about everything important directly.</h4>
+						</div>
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 col-lg-offset-0 col-md-offset-0 col-sm-offset-3 col-xs-offset-3">
+						<div class="row">
+							<div class="ed_newsletter_section_form">
+								<form class="form">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<input class="form-control" type="text" placeholder="Newsletter Email" />
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+										<button class="btn ed_btn ed_green">confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+	</div>
+</div>
+<!--Newsletter Section six end-->
+{% endblock %}
