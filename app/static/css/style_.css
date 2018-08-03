@@ -826,7 +826,7 @@ textarea:focus {
 	position:relative;
 }
 .ed_item_img img{
-	/*border-radius:100%;*/
+	border-radius:100%;
 }
 .ed_item_img:after{
 	content:"";
@@ -835,7 +835,7 @@ textarea:focus {
     left: 100%;
     right: 100%;
     bottom: 100%;
-	/*border-radius:100%;*/
+	border-radius:100%;
     background-color: rgba(22, 122, 198, 0.6);
 	-webkit-transition: all 0.3s;
 	-moz-transition: all 0.3s;
