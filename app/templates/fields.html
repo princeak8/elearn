@@ -1,0 +1,141 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+
+
+<!--Breadcrumb start-->
+<div class="ed_pagetitle">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-4 col-sm-6">
+				<div class="page_title">
+					<h2>SELECT FIELD OF INTEREST</h2>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-sm-6">
+				<ul class="breadcrumb">
+					<li><a href="index.html">home</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li>Fields</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Breadcrumb end-->
+<!--Single content start-->
+<div class="ed_graysection ed_purchase_course ed_toppadder80 ed_bottompadder80 course_purchase_wrapper">
+  <div class="container">
+    <div class="row">
+	
+		<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
+			<div class="ed_course_single_item">
+				<div class="row">
+
+					{% for interest in data['interests'] %}
+						<button class="btn field {% if data['selected_interests'] and interest._id in data['selected_interests']: %} btn-primary {% endif %}" style="min-width: 50px; margin-right: 15px; margin-bottom: 10px;" data-name="{{ interest.name }}" {% if data['selected_interests'] and interest._id in data['selected_interests']: %} data-selected="1" {% else %} data-selected="0" {% endif %}>
+							{{ interest.name }}
+						</button>
+					{% endfor %}
+
+				</div>
+			</div>	
+
+			<div class="ed_course_single_item">
+				<div class="row" style="text-align: center;">
+					<a href="/student/dashboard" class="btn btn-success">PROCEED TO DASHBOARD</a>
+				</div>
+			</div>
+		</div>
+		
+<!--Sidebar End-->
+
+	</div>
+  </div>  
+  
+</div>
+
+<!--Single content end-->
+<!--Newsletter Section six start-->
+<div class="ed_newsletter_section">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+						<div class="ed_newsletter_section_heading">
+							<h4>Let us inform you about everything important directly.</h4>
+						</div>
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 col-lg-offset-0 col-md-offset-0 col-sm-offset-3 col-xs-offset-3">
+						<div class="row">
+							<div class="ed_newsletter_section_form">
+								<form class="form">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<input class="form-control" type="text" placeholder="Newsletter Email" />
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+										<button class="btn ed_btn ed_green">confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+	</div>
+</div>
+<!--Newsletter Section six end-->
+
+<script type="application/javascript">
+	$(document).ready(function() { 
+		$('.field').click(function() {
+			var field = $(this);
+			var selected = $(this).data('selected');
+			var name = $(this).data('name');
+			if(selected==0) {
+				var action = 'add';
+			}
+			if(selected==1) {
+				var action = 'remove';
+			}
+			toggle_select(name, action, field);
+		})
+	})
+
+	function toggle_select(interest, action, field)
+	{
+		$.ajax({
+	        url:'/toggle_interest', 
+	        data:{interest: interest, action: action}, 
+	        type: "post", 
+	        async: false, 
+	        error: function(xhr, textStatus, errorThrown) {
+	            console.log(xhr.responseText);
+	            //alert(xhr.responseText);
+	        },
+	        success: function(response) { //alert(data);
+	           	response = JSON.parse(response);
+	            console.log(response.status);
+	            if(response.status=='OK') { //operation successfull
+	              	if(action=='add') {
+						field.addClass('btn-primary');
+						field.data('selected', '1');
+					}
+					if(action=='remove') {
+						field.removeClass('btn-primary');
+						field.data('selected', '0');
+					}
+	            }
+	            if(response.status=='ERROR') { //operation unsuccessfull
+		        }
+	        }
+	    })//ajax ends here
+	}
+</script>
+
+{% endblock %}
+

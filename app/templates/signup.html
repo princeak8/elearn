@@ -1,0 +1,95 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+
+<!--Breadcrumb start-->
+<div class="ed_pagetitle">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-4 col-sm-6">
+				<div class="page_title">
+					<h2>sign up</h2>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-sm-6">
+				<ul class="breadcrumb">
+					<li><a href="index.html">home</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li><a href="signup.html">sign up</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Breadcrumb end-->
+<div class="ed_transprentbg ed_toppadder80 ed_bottompadder80">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-6 col-sm-12 col-xs-12 col-lg-offset-3 col-md-offset-3">
+				<div class="ed_teacher_div">
+					<div class="ed_heading_top">
+						<h3>sign up</h3>
+					</div>
+
+					<form action="{{ url_for('student_signup') }}" method="post" class="ed_contact_form ed_toppadder40">
+
+						{{ form.hidden_tag() }}
+
+						<div class="form-group">
+							{{ form.name.label }}
+
+							{% if form.name.errors %}
+								{% for error in form.name.errors %}
+									<p class="alert-error" style="color: red">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+
+							{{ form.name(class="form-control", placeholder="FullName", required="required") }}
+						</div>
+
+						<div class="form-group">
+							{{ form.email.label }}
+
+							{% if form.email.errors %}
+								{% for error in form.email.errors %}
+									<p class="alert-error" style="color: red">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+
+							{{ form.email(class="form-control", placeholder="Email Address", required="required") }}
+						</div>
+
+						<div class="form-group">
+							{{ form.password.label }}
+
+							{% if form.password.errors %}
+								{% for error in form.password.errors %}
+									<p class="alert-error" style="color: red">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+
+							{{ form.password(class="form-control", placeholder="Password", required="required") }}
+						</div>
+
+						<div class="form-group">
+							{{ form.phone.label }}
+
+							{% if form.phone.errors %}
+								{% for error in form.phone.errors %}
+									<p class="alert-error" style="color: red">{{ error }}</p>
+								{% endfor %}
+							{% endif %}
+
+							{{ form.phone(class="form-control", placeholder="Phone Number", required="required") }}
+						</div>
+
+						{{ form.submit(class="btn-primary form-control") }}
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

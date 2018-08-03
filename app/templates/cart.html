@@ -1,0 +1,129 @@
+{% extends "layout2.html" %}
+
+{% block content %}
+<!--Breadcrumb start-->
+<div class="ed_pagetitle">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6 col-md-4 col-sm-6">
+				<div class="page_title">
+					<h2>Cart</h2>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-sm-6">
+				<ul class="breadcrumb">
+					<li><a href="{{ url_for('index') }}">home</a></li>
+					<li><i class="fa fa-chevron-left"></i></li>
+					<li>Cart</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>
+<!--Breadcrumb end-->
+<!--Cart page start-->
+<div class="ed_graysection ed_toppadder80 ed_bottompadder80">
+  <div class="container">
+    <div class="row">
+    
+    {% if data['cart']|length > 0: %}
+
+		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		<div class="woo-cart-table">
+			<div class="table-responsive">          
+			  <table class="table table-bordered">
+				<thead>
+				  <tr>
+					<th>S.No.</th>
+					<th>courses image</th>
+					<th>courses</th>
+					<th>quantity</th>
+					<th>total</th>
+					<th>remove</th>
+				  </tr>
+				</thead>
+				<tbody>
+				{% for item in data['cart']: %}
+					  <tr>
+						<td>1</td>
+						<td><img src="http://placehold.it/100X50" alt="event image" /></td>
+						<td>{{ item['title'] }}</td>
+						<td>1</td>
+						<td><span>{{ "N{:,.2f}".format(item['cost']|int) }}</span></td>
+						<td><a href="/remove_from_cart/{{ item['title'] }}" data-toggle="tooltip" data-placement="bottom" title="Remove Item" onclick="return confirm('Are You Sure You Want to Remove this Item from Cart?')">x</a></td>
+					  </tr>
+				{% endfor %}
+
+				</tbody>
+			  </table>
+			  </div>
+		</div>
+
+	{% else: %}
+
+	       NO ITEM IN CART
+
+	{% endif %}
+
+		</div>
+		
+	<div class="ed_cart_collaterals">
+	<div class="cart_totals">	
+		<h2>Cart Totals</h2>
+		<table class="table table-bordered">
+			<tbody>
+				<tr class="cart-subtotal">
+					<th>Subtotal</th>
+					<td><span class="amount">{{ "N{:,.2f}".format(data['sub_total']|int) }}</span></td>
+				</tr>
+				<tr class="order-total">
+					<th>Total</th>
+					<td><span class="amount">{{ "N{:,.2f}".format(data['sub_total']|int) }}</span> </td>
+				</tr>
+			</tbody>
+		</table>	
+		<div class="wc-proceed-to-checkout">
+			<a {% if data['cart']|length == 0: %} style="color: #CCC;" {% else: %} href="/checkout" {% endif %} class="btn ed_btn ed_green">Proceed to Checkout</a>
+		</div>
+	</div>
+	</div>
+		
+	</div>
+  </div>  
+</div>
+<!--cart page end-->
+<!--Newsletter Section six start-->
+<div class="ed_newsletter_section">
+<div class="ed_img_overlay"></div>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<div class="row">
+					<div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+						<div class="ed_newsletter_section_heading">
+							<h4>Let us inform you about everything important directly.</h4>
+						</div>
+					</div>
+					<div class="col-lg-5 col-md-5 col-sm-6 col-xs-6 col-lg-offset-0 col-md-offset-0 col-sm-offset-3 col-xs-offset-3">
+						<div class="row">
+							<div class="ed_newsletter_section_form">
+								<form class="form">
+									<div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+										<input class="form-control" type="text" placeholder="Newsletter Email" />
+									</div>
+									<div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+										<button class="btn ed_btn ed_green">confirm</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+	</div>
+</div>
+<!--Newsletter Section six end-->
+
+{% endblock %}
