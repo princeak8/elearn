@@ -21,13 +21,13 @@
 									<a href="#"><i class="fa fa-chevron-right"></i></a>
 								</div>
 							</div>
-							<iframe id="educo_video" class="embed-responsive-item" src="https://www.youtube.com/embed/8mb-0qbq984" allowfullscreen></iframe>
-						</div>
+							<script src="https://fast.wistia.com/embed/medias/jk7w6bpza6.jsonp" async></script><script src="https://fast.wistia.com/assets/external/E-v1.js" async></script><div class="wistia_responsive_padding" style="padding:66.56% 0 0 0;position:relative;"><div class="wistia_responsive_wrapper" style="height:100%;left:0;position:absolute;top:0;width:100%;"><div class="wistia_embed wistia_async_jk7w6bpza6 videoFoam=true" style="height:100%;position:relative;width:100%"><div class="wistia_swatch" style="height:100%;left:0;opacity:0;overflow:hidden;position:absolute;top:0;transition:opacity 200ms;width:100%;"><img src="https://fast.wistia.com/embed/medias/jk7w6bpza6/swatch" style="filter:blur(5px);height:100%;object-fit:contain;width:100%;" alt="" onload="this.parentNode.style.opacity=1;" /></div></div></div></div>
+													</div>
 					</div>
 				
 				</div>
 			<div class="ed_course_single_info">
-				<h3 class="ed_toppadder20"><b>LESSON: </b>{{data['lesson']['title']}}</h3>
+				<h2 class="ed_toppadder20"><b>LESSON: </b>{{data['lesson']['title']}}</h2>
 				
 				<p>{{data['lesson']['description']}}.</p>
 				{% if data['lesson']['prev']: %}
@@ -61,6 +61,7 @@
 						<p id="none">There are no Questions on this lesson Yet</p>
 					
 					{% else: %}
+					<div id="question-break" style="clear: both;"></div>
 						{% for question in data['lesson_questions']: %}
 							<div style="margin-top: 10px; border: #DDD thin outset">
 								<p class="pull-right">{{question['date_asked']}}</p>
@@ -185,7 +186,10 @@
 							Qhtml += '</div>';
 							$('#QMsg').html('');
 							$('#question-break').append(Qhtml);
+<<<<<<< HEAD
 							$('#none').css('display', 'none');
+=======
+>>>>>>> princeak
 					}else{
 						$('#QMsg').html('SORRY! There was a problem while trying to send your question. Try again later');
 						$('#QMsg').removeClass('alert-success');

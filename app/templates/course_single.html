@@ -31,7 +31,7 @@
 			<div class="col-lg-9 col-md-9 col-sm-12 col-xs-12">
 				<div class="ed_course_single_item">
 					<div class="ed_course_single_image">
-						<img src="http://placehold.it/806X450" alt="event image" />
+						<img src="{{url_for('static', filename='images/onlinecourse.jpg')}}" alt="event image" />
 					</div>
 					<div class="ed_course_single_info">
 						<h2>{{ data['course'].title }}<span>{{ "N{:,.2f}".format(data['course'].price) }}</span></h2>

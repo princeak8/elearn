@@ -10,7 +10,7 @@
 			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
 				<div class="ed_sidebar_wrapper">
 					<div class="ed_profile_img">
-					<img src="http://placehold.it/263X263" alt="Dashboard Image" />
+					<img src="{{url_for('static', filename='images/student_black.jpg')}}" alt="Dashboard Image" />
 					</div>
 					<h3>{{ data['student']['name'] }}</h3>
 					 <div class="ed_tabs_left">
@@ -49,7 +49,7 @@
 						{% for course in data['interest_courses'] %}
 							<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ed_bottompadder20">
 								<div class="ed_item_img">
-									<img src="http://placehold.it/248X248" alt="item1" class="img-responsive">
+									<img src="{{url_for('static', filename='images/study_course.jpg')}}" alt="item1" class="img-responsive">
 								</div>
 								<div class="ed_item_description ed_most_recomended_data">
 									<h4><a href="{{ url_for('single_course', courseId=course._id) }}"> {{ course.title }} </a><span>{{ "N{:,.2f}".format(course.price) }}</span></h4>
