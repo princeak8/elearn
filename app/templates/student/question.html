@@ -1,0 +1,61 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+
+<div class="row" style="margin-top: 30px; margin-bottom: 40px; padding-left: 20px;">
+	<h3>
+		<a href="{{url_for('course_lesson', course_title=data['course']['title'], lesson_title=data['lesson']['title'])}}">
+			{{data['course']['title']}}  -  Lesson: {{data['lesson']['title']}}
+		</a>
+	</h3>
+	<div class="col-md-12" style="text-align: center;">
+		<h2>{{data['question'].question}}</h2>		
+	</div>
+
+	<div class="col-md-12">
+
+		{% if data['responses']|length == 0: %}
+			<p>There has been no response to this question</p>
+		{% else: %}
+			<div class="col-md-8">
+				<h4>{{data['responses']|length}} RESPONSE(S) TO THIS QUESTION</h4>
+				
+				{% for response in data['responses']: %}
+					{% if response['instructor_id']==0: %}
+						<div class="col-md-8" style="border: #CCC medium inset; margin-bottom: 5px; padding-bottom: 10px;">
+							<h5 class="pull-right">{{response['date'].strftime("%Y-%m-%d %H:%M:%S")}}</h5>
+							<h5>{{response['student']['name']}}(<i>Student</i>)</h5>
+								<p>
+									{{response['response']}}
+								</p>
+						</div>
+					{% endif %}
+					{% if response['student_id']==0: %}
+						<div class="col-md-8 pull-right" style="border: #CCC medium inset; margin-bottom: 5px; padding-bottom: 10px;">
+							<h5 class="pull-right">{{response['date'].strftime("%Y-%m-%d %H:%M:%S")}}</h5>
+							<h5>{{response['instructor']['name']}}(<i>Instructor</i>)</h5>
+
+								<p>
+									{{response['response']}}
+								</p>
+						</div>
+					{% endif %}
+				{% endfor %}
+
+			</div>
+		{% endif %}
+
+		<div class="col-md-6" style="margin-top: 40px; margin-bottom: 40px;">
+			<p>Respond to this Question</p>
+			<form method="POST" action="{{ url_for('question_student_response') }}">
+				<textarea name="response" class="form-control" required></textarea>
+				<input type="hidden" name="question_id" value="{{data['question']._id}}">
+				<input type="submit" name="submit" class="form-control" value="Submit" />
+			</form>
+		</div>
+		
+
+	</div>
+</div>
+
+{% endblock %}
