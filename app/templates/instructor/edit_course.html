@@ -1,0 +1,99 @@
+{% extends "layouts/instructor.html" %}
+
+{% block content %}
+<!--instructor single start-->
+<div class="ed_dashboard_wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12">
+				<div class="ed_sidebar_wrapper">
+					<div class="ed_profile_img">
+					<img src="/static/images/profile/{{ data['instructor']['photo'] }}" alt="Profile Image" class="img-responsive" />
+					</div>
+					<h3>{{ session['instructor']['name'] }}</h3>
+					 <div class="ed_tabs_left">
+						<ul class="nav nav-tabs">
+						  <li><a href="/instructor">HOME</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="ed_dashboard_tab">
+				<div class="tab-content">
+					<h3>
+						<a href="/instructor/course/{{data['course']['_id']}}">
+							{{data['course']['title']}}
+						</a>
+						- EDIT
+					</h3>
+					
+					<form action="{{ url_for('update_course') }}" method="post" enctype="multipart/form-data" class="ed_contact_form ed_toppadder40">
+						{% with status = get_flashed_messages() %}
+							{% if status %}
+								{% if status[0]=='1' %}
+									<p class="alert-success">
+										Course updated successfully
+									</p>
+								{% else %}
+									<p class="alert-danger">
+										There was a problem while trying to update course. Please try again later
+									</p>
+								{% endif %}
+							{% endif %}
+						{% endwith %}
+
+							{{ data['edit_course_form'].hidden_tag('csrf_token') }}
+
+							<div class="form-group">
+								{{ data['edit_course_form'].title.label }}
+
+								{% if data['edit_course_form'].title.errors %}
+									{% for error in data['edit_course_form'].title.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_course_form'].title(class="form-control", placeholder="Title of Course", required="required") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['edit_course_form'].cover_photo.label }}
+								<img src="{{url_for('static', filename='images/courses_cover_photos/'+data['course']['cover_photo'])}}" alt="item1" class="img-responsive" style="height: 120px; width: 100px;">
+								{% if data['edit_course_form'].cover_photo.errors %}
+									{% for error in data['edit_course_form'].cover_photo.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_course_form'].cover_photo(class="form-control", placeholder="Cover Photo") }}
+							</div>
+
+							<div class="form-group">
+								{{ data['edit_course_form'].description.label }}
+
+								{% if data['edit_course_form'].description.errors %}
+									{% for error in data['edit_course_form'].description.errors %}
+										<p class="alert-error" style="color: red">{{ error }}</p>
+									{% endfor %}
+								{% endif %}
+
+								{{ data['edit_course_form'].description(class="form-control", placeholder="Description of Course", required="required") }}
+							</div>
+
+							{{ data['edit_course_form'].course_id() }}
+
+							{{ data['edit_course_form'].submit(class="btn-primary form-control", value="EDIT") }}
+						</form>
+
+				</div>
+			</div>
+			</div>
+			
+			
+		</div>
+	</div>
+</div>
+<!--instructor single end-->
+
+{% endblock %}

@@ -78,8 +78,13 @@ class Course():
 
     def update(self, course_id, title, cover_photo, description):
         #course_id = mongo.db.courses.find_one({"_id":course_id})
+        if(cover_photo==''):
+            fieldset = {"title": title, "description": description}
+        else:
+            fieldset = {"title": title, "cover_photo": cover_photo, "description": description}
+
         try:
-            result = mongo.db.courses.update({"_id": course_id}, {"$set": {"title": title, "cover_photo": cover_photo, "description": description}})
+            result = mongo.db.courses.update({"_id": course_id}, {"$set": fieldset})
             return 'OK'
         except Exception, e:
             return e

@@ -49,7 +49,7 @@
 						{% for course in data['interest_courses'] %}
 							<div class="col-lg-4 col-md-4 col-sm-6 col-xs-12 ed_bottompadder20">
 								<div class="ed_item_img">
-									<img src="{{url_for('static', filename='images/study_course.jpg')}}" alt="item1" class="img-responsive">
+									<img src="{{url_for('static', filename='images/courses_cover_photos/'+course.cover_photo)}}" alt="item1" class="img-responsive" style="min-height: 248px; min-width: 248px;">
 								</div>
 								<div class="ed_item_description ed_most_recomended_data">
 									<h4><a href="{{ url_for('single_course', courseId=course._id) }}"> {{ course.title }} </a><span>{{ "N{:,.2f}".format(course.price) }}</span></h4>

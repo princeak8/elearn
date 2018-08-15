@@ -20,7 +20,7 @@ class CartController():
 		self.newLesson = Lesson()
 
 
-	def update_cart():
+	def update_cart(self):
 		#session['cart'] = []
 		data = {}
 		data['loggedIn'] = False
@@ -65,7 +65,7 @@ class CartController():
 						session.modified = True
 						rcount = rcount - 1
 
-				return redirect(url_for('purchase_course', title=course['title']))
+				return redirect(url_for('purchase_course', courseId=course['id']))
 				#return redirect(url_for('dashboard'))
 			else:
 				return redirect(url_for('dashboard'))
@@ -100,7 +100,7 @@ class CartController():
 			return redirect(url_for('index'))
 
 
-	def view_cart():
+	def view_cart(self):
 		data = {}
 		data['loggedIn'] = False
 
@@ -125,7 +125,7 @@ class CartController():
 			return redirect(url_for('index'))
 
 
-	def checkout():
+	def checkout(self):
 		data = {}
 		data['loggedIn'] = False
 

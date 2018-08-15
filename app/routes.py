@@ -170,6 +170,16 @@ def instructor_course(courseId):
 	course = InstructorCourse()
 	return course.course(courseId)
 
+@app.route('/instructor/edit_course/<courseId>')
+def instructor_edit_course(courseId):
+	course = InstructorCourse()
+	return course.edit(courseId)
+
+@app.route('/instructor/update_course', methods=['POST'])
+def update_course():
+	course = InstructorCourse()
+	return course.update()
+
 @app.route('/instructor/new_lesson', methods=['POST'])
 def new_lesson():
 	course = InstructorCourse()
@@ -211,7 +221,6 @@ def question_student_response():
 	return question.respond()
 
 def set_session_val():
->>>>>>> master
 	session['mylist'] = {}
 	session['cart'] = {}
 	session['cart']['key'] = 'val'

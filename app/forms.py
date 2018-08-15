@@ -33,3 +33,11 @@ class CourseForm(Form):
 	description = TextAreaField('Description:', validators=[DataRequired("Enter the description of the course")])
 	instructor_id = HiddenField()
 	submit = SubmitField('SUBMIT')
+
+class EditCourseForm(Form):
+	title = StringField('Title:', validators=[DataRequired("Enter the Title")])
+	cover_photo = FileField('Cover Photo:')
+	description = TextAreaField('Description:', validators=[DataRequired("Enter the description of the course")])
+	course_id = HiddenField()
+	instructor_id = HiddenField()
+	submit = SubmitField('SUBMIT')

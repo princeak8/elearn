@@ -12,7 +12,7 @@ from werkzeug.utils import secure_filename
 #from models.Student_subscription import Student_subscription
 #from models.Student_question import Student_question
 
-from forms import CourseForm, LessonForm, QuestionForm
+from forms import CourseForm, EditCourseForm, LessonForm, QuestionForm
 import bcrypt
 import locale
 from bson import ObjectId
@@ -85,6 +85,8 @@ class CourseController():
 			return redirect(url_for('instructor_login'))
 
 		data = self.course_data(course_id)
+		data['new_course_form'] = CourseForm()
+		data['new_course_form'].instructor_id.data = data['instructor']['_id']
 		data['new_lesson_form'] = LessonForm()
 		data['new_lesson_form'].course_id.data = course_id
 
@@ -115,6 +117,57 @@ class CourseController():
 					photo.save(os.path.join(self.uploadFolder, filename))
 				id = self.newCourse.add(form.title.data, filename, form.description.data, instructor_id)
 				return redirect(url_for('instructor_courses'))
+
+		return redirect(url_for('instructor_dashboard'))
+
+	def edit(self, course_id):
+		form = EditCourseForm()
+		data = {}
+
+		course = self.newCourse.get_course_by_id(ObjectId(course_id))
+		data['edit_course_form'] = form
+		data['edit_course_form'].course_id.data = course_id
+		data['edit_course_form'].title.data = course['title']
+		data['edit_course_form'].cover_photo.data = course['cover_photo']
+		data['edit_course_form'].description.data = course['description']
+		data['course'] = course
+
+		data['instructor'] = self.newInstructor.get_instructor_by_name(session['instructor']['name'])
+
+		return render_template('instructor/edit_course.html', data=data)
+
+	def update(self):
+		form = EditCourseForm()
+		data = {}
+
+		if request.method == 'POST':
+			courseid = form.course_id.data
+			course_id = ObjectId(courseid)
+			course = self.newCourse.get_course_by_id(course_id)
+			if form.validate() == True:
+				if 'cover_photo' not in request.files:
+					flash('No Cover Photo')
+					return redirect(url_for('instructor_edit_course', courseId=course_id))
+				photo = request.files['cover_photo']
+				if photo.filename == '':
+					filename = ''
+				if photo and self.allowed_file(photo.filename):
+					filename = secure_filename(photo.filename)
+					#Add new photo
+					photo.save(os.path.join(self.uploadFolder, filename))
+					#Remove old photo
+					if os.path.isfile(self.uploadFolder+course['cover_photo']):
+						os.remove(os.path.join(self.uploadFolder, course['cover_photo']))
+				result = self.newCourse.update(course_id, form.title.data, filename, form.description.data)
+				if result == 'OK':
+					flash('1')
+				else:
+					flash('0')
+
+				#return jsonify(str(result))
+				return redirect(url_for('instructor_edit_course', courseId=course_id))
+			else:
+				return redirect(url_for('instructor_edit_course', courseId=course_id))
 
 		return redirect(url_for('instructor_dashboard'))
 
